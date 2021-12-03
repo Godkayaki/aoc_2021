@@ -9,7 +9,7 @@ import os, sys
 
 #part 1
 with open(os.path.join(sys.path[0], "input.txt"), "r") as f:
-    lines, line_val, horizontal, depth = f.readlines(), None, 0, 0
+    lines, horizontal, depth = f.readlines(), 0, 0
     for index, line in enumerate(lines):
         vals = line.split()
         if vals[0] == "forward": horizontal = horizontal + int(vals[1])
@@ -19,7 +19,7 @@ print(horizontal*depth)
 
 #part 2
 with open(os.path.join(sys.path[0], "input.txt"), "r") as f:
-    lines, line_val, horizontal, depth, aim = f.readlines(), None, 0, 0, 0
+    lines, horizontal, depth, aim = f.readlines(), 0, 0, 0
     for index, line in enumerate(lines):
         vals = line.split()
         if vals[0] == "forward": 
