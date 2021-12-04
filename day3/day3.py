@@ -26,3 +26,5 @@ with open(os.path.join(sys.path[0], "input.txt"), "r") as f:
     print(g*e)
 
 #part 2
+ogr = 0
+csr = 0
