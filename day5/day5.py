@@ -10,9 +10,9 @@ board = Counter()
 
 #get diagram
 base_diagram = []
-for n1 in range(0, 999):
+for n1 in range(0, 9):
     row = []
-    for n2 in range(0,999): row.append(",")
+    for n2 in range(0,9): row.append(",")
     base_diagram.append(row)
 
 #pass x, y coordinates of the diagam and substitute accordingly
@@ -90,6 +90,8 @@ with open(os.path.join(sys.path[0], "input.txt"), "r") as f:
                 for yval in range(int(y2-y1) + 1):
                     y = yval
                     change_diagram(x, y)
+
+for row in base_diagram: print(row)
 
 res = 0
 for row in base_diagram:
