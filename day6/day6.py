@@ -13,7 +13,7 @@ with open(os.path.join(sys.path[0], "input.txt"), "r") as f:
     counts = [0] * 9
     for n in f.read().split(','):
         counts[int(n)] += 1
-    
+
     #iterate days and move values by -1
     for day in range(days):
         births, *counts = counts + [0]
