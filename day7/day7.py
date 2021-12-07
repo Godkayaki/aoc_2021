@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 #coding=utf-8
-#Created on 06 dec. 2021 - by Daniel González Martínez
-#day 6.py
+#Created on 07 dec. 2021 - by Daniel González Martínez
+#day 7.py
 
 import os, sys
 
