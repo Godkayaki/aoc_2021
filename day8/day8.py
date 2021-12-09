@@ -26,11 +26,17 @@ with open(os.path.join(sys.path[0], "input.txt"), "r") as f:
     for index, line in enumerate(lines):
         delimited_vals = line.split('|')
         del_delimited_vals = delimited_vals[1].split(' ')
+        del_delimited_vals.pop(0)
         for val in del_delimited_vals:
             new_val = ""
             if len(val.rstrip("\n")) in unique_vals_c:
-                new_val = new_val + val.rstrip(("\n"))
+                new_val = new_val + str(len(val.rstrip("\n")))
             else:
-                pass
+                for index, pos in enumerate(vals):
+                    print(''.join(sorted(pos)), ''.join(sorted(val.rstrip("\n"))))
+                    if ''.join(sorted(pos)) == ''.join(sorted(val.rstrip("\n"))):
+                        new_val = new_val + str(index)
+                        break
+            print(new_val)
 
-print(unique_e)
+#print(unique_e)
