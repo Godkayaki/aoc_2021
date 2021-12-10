@@ -42,22 +42,4 @@ with open(os.path.join(sys.path[0], "input.txt"), "r") as f:
                 if int(val) >= num: a = False
             if a != False: res.append(int(val)+1)
 
-'''print(sum(res))
-
-#part 2
-with open(os.path.join(sys.path[0], "input.txt"), "r") as f:
-    lines, lines_vals, res, directions = f.readlines(), [], [], 4
-    for index, line in enumerate(lines):
-        lines_vals.append(list(line.rstrip("\n")))
-
-    for index, line in enumerate(lines_vals):
-        for index_line, val in enumerate(line):
-            if val == 9: continue
-            else:
-                for i in range(0, directions):
-                    if i == 0:
-                        while d != 9:
-
-                    elif i == 1:
-                    elif i == 2:
-                    elif i == 3:'''
+print(sum(res))
