@@ -17,26 +17,35 @@ with open(os.path.join(sys.path[0], "input.txt"), "r") as f:
 
 print(unique_e)
 
-pos = [0, 2, 3, 5, 6, 9]
-vals = ["cagedb", "gcdfa", "fbcad", "cdfbe", "cdfgeb", "cefabd"]
-
 #part 2
-with open(os.path.join(sys.path[0], "input.txt"), "r") as f:
-    lines, unique_vals_c = f.readlines(), [7, 2, 3, 4]
-    for index, line in enumerate(lines):
-        delimited_vals = line.split('|')
-        del_delimited_vals = delimited_vals[1].split(' ')
-        del_delimited_vals.pop(0)
-        for val in del_delimited_vals:
-            new_val = ""
-            if len(val.rstrip("\n")) in unique_vals_c:
-                new_val = new_val + str(len(val.rstrip("\n")))
-            else:
-                for index, pos in enumerate(vals):
-                    print(''.join(sorted(pos)), ''.join(sorted(val.rstrip("\n"))))
-                    if ''.join(sorted(pos)) == ''.join(sorted(val.rstrip("\n"))):
-                        new_val = new_val + str(index)
-                        break
-            print(new_val)
+data = open(os.path.join(sys.path[0], "input.txt"), "r").read().strip().split("\n")
+#format lines so [[[vals], [result_code]], [[vals], [result_code]]]
+lines = [[["".join(sorted(z)) for z in y.split()] for y in x.split(" | ")] for x in data]
+result_code = 0
 
-#print(unique_e)
+#rules:
+#2 length == 1
+#4 length == 4
+#3 length == 7
+#7 length == 8
+#6 length + all letters from 4 (diferenciate from both 5 and 0) == 9
+#6 length + diferent from 9 + all letters from 1 (diferenciate from 6)
+#6 length + diferent from 9 + diferent from 0
+#5 length + all letters from 1 (diferenciate from 5 and 2)
+#5 length + diferent from 3 + all letters from 5 to 9 (diferenciate from 2)
+#5 length + diferent from 3 + diferent from 5
+for nums, digits in lines:
+    n1 = [x for x in nums if len(x) == 2][0]
+    n4 = [x for x in nums if len(x) == 4][0]
+    n7 = [x for x in nums if len(x) == 3][0]
+    n8 = [x for x in nums if len(x) == 7][0]
+    n9 = [x for x in nums if len(x) == 6 and all(y in x for y in n4)][0]
+    n0 = [x for x in nums if len(x) == 6 and x != n9 and all(y in x for y in n1)][0]
+    n6 = [x for x in nums if len(x) == 6 and x != n9 and x != n0][0]
+    n3 = [x for x in nums if len(x) == 5 and all(y in x for y in n1)][0]
+    n5 = [x for x in nums if len(x) == 5 and x != n3 and all(y in n9 for y in x)][0]
+    n2 = [x for x in nums if len(x) == 5 and x != n3 and x != n5][0]
+    nums = [n0, n1, n2, n3, n4, n5, n6, n7, n8, n9]
+
+    result_code += int("".join([str(nums.index(x)) for x in digits]))
+print(result_code)
