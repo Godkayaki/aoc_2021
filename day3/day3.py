@@ -3,7 +3,9 @@
 #Created on 03 dec. 2021 - by Daniel González Martínez
 #day 3.py
 
-#i'll be late on this i know
+#i was going crazy with part 2 because i was trying to do both 0 and 1
+#at the same time so i borrowed r/Quietuus answer on day3 and i deconstruct
+#it to understand it, everything fine, I'm just a fucking idiot ~
 
 import os, sys, copy
 
@@ -24,60 +26,48 @@ with open(os.path.join(sys.path[0], "input.txt"), "r") as f:
             epsilon = epsilon + "0"
     g, e = int(gamma, 2), int(epsilon, 2)
 
-#print(g*e)
+print(g*e)
 
 #part 2
-with open(os.path.join(sys.path[0], "input.txt"), "r") as f:
-    lines, gamma, epsilon, most_c_list, less_c_list = f.readlines(), "", "", [], []
-    for index_l, line_vals in enumerate(lines):
-        most_c_list.append(line_vals.rstrip("\n"))
-        less_c_list.append(line_vals.rstrip("\n"))
+def bit_counter(array, index):
+    zeroes, ones = 0, 0
+    for line in array:
+        if line[index] == "0":
+            zeroes += 1
+        if line[index] == "1":
+            ones += 1
+    return zeroes, ones
     
-    for index, line in enumerate(lines[0].rstrip("\n")):
-        vals = []
-        for index_lines, line_lines in enumerate(lines):
-            vals.append(line_lines[index])
-        
-        try:
-            mc, lc = [], []
-            for a, b in enumerate(most_c_list):
-                mc.append(b[index])
-            for a, b in enumerate(less_c_list):
-                lc.append(b[index])
-            most_common, less_common = max(set(mc), key = mc.count), min(set(lc), key = lc.count)
-        
-        except: most_common, less_common = max(set(vals), key = vals.count), min(set(vals), key = vals.count)
+def most(zeroes, ones):
+    if ones >= zeroes:
+        return '1'
+    else:
+        return '0'
 
-        zeros, ones = 0, 0
-        for val in vals:
-            if val == '0': zeros+=1
-            elif val == '1': ones+=1
+def least(zeroes, ones):
+    if ones >= zeroes:
+        return '0'
+    else:
+        return '1'
+ 
+def recursive_search(array, index, mode):
+    if len(array) == 1:
+        return array[0]
+    else:
+        zeroes, ones = bit_counter(array, index)
+        if mode == 'most':
+            current_column = most(zeroes, ones)
+        elif mode == 'least':
+            current_column = least(zeroes, ones)
+        new_array = []
+        for item in array:
+            if item[index] == current_column:
+                new_array.append(item)
+        index += 1
+        return recursive_search(new_array, index, mode)
 
-        print("mc: " + str(most_common) + " lc: " + str(less_common))
-        print("zeros: " + str(zeros) + " ones:" + str(ones))
-
-        i=0
-        for i, line_lines_r in enumerate(lines):
-            linea_tww = line_lines_r.rstrip("\n")
-            if linea_tww[index] == most_common: 
-                try:
-                    if len(less_c_list) == 2:
-                        for i_t, el in enumerate(less_c_list):
-                            if el[index] == '1':
-                                less_c_list.remove(el)
-                    elif len(less_c_list) != 1: 
-                        less_c_list.remove(linea_tww)
-                except: pass
-            elif linea_tww[index] == less_common:
-                try:
-                    if len(most_c_list) == 2:
-                        for i_t, el in enumerate(most_c_list):
-                            if el[index] == '0':
-                                most_c_list.remove(el)
-                    elif len(most_c_list) != 1: 
-                        most_c_list.remove(linea_tww)
-                except: pass
-            i+=1
-    ogr, csr = int(most_c_list[0], 2), int(less_c_list[0], 2)
-print(most_c_list[0], less_c_list[0])
-print(ogr*csr)
+string_array = []
+with open(os.path.join(sys.path[0], "input.txt"), "r") as in_file:
+    for line in in_file:
+        string_array.append(line.strip('\n'))       
+print(int(recursive_search(string_array,0, 'most'), 2) * int(recursive_search(string_array,0, 'least'), 2))
