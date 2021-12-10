@@ -70,4 +70,5 @@ string_array = []
 with open(os.path.join(sys.path[0], "input.txt"), "r") as in_file:
     for line in in_file:
         string_array.append(line.strip('\n'))       
+
 print(int(recursive_search(string_array,0, 'most'), 2) * int(recursive_search(string_array,0, 'least'), 2))
