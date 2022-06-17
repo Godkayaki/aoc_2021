@@ -12,7 +12,7 @@ This is you yearly advent calendary but with code problems, you can check everyt
 ## Installation
 To install search by last release, to execute from source code;
 ```
-git clone https://github.com/Godkayaki/Router-devnet-config
+git clone https://github.com/Godkayaki/aoc_2021
 cd Local_mc_backup/src
 python3 day*/day*.py
 ```
